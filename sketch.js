@@ -6,7 +6,7 @@ let textString = "";
 let points = [];
 let mouseRadius = 100;
 let baseHue = 255;
-let colorCandidates = [baseHue , 100, 251];
+let colorCandidates = [baseHue , 100, 250];
 let colorRand;
 
 let highlightWords = [
