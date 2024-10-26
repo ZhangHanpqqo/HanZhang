@@ -17,8 +17,8 @@ let highlightWords = [
 ];
 
 function preload() {
-  font = loadFont("https://github.com/ZhangHanpqqo/HanZhang/blob/main/assets/rm_typerighter_old.ttf");
-  fontCN = loadFont("https://github.com/ZhangHanpqqo/HanZhang/blob/main/assets/songti_CN.otf");
+  font = loadFont("./assets/rm_typerighter_old.ttf");
+  fontCN = loadFont("./assets/songti_CN.otf");
 }
 
 
