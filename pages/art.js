@@ -12,7 +12,7 @@ const images = [
     {index: 2, path: "../assets/img_art/floating.jpg", name: "floating",  associate:[]},           
     {index: 3, path: "../assets/img_art/woyuekan.JPG", name: "woyuekan",  associate:[]},           
     {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT",  associate:[]},               
-    {index: 5, path: "../assets/img_art/learn2move.JPG", name: "L2M",  associate:[6]},        
+    {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M",  associate:[6]},        
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L",  associate:[5]},        
     {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood",  associate:[]},         
     {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical",  associate:[]}    
@@ -318,7 +318,7 @@ function mousePressed(){
 
     // jump to the corresponding page
     if (mouse_click != null){
-        window.location.href = "/pages/art/" + img_pos[i].name + ".html";
+        window.location.href = "./art/" + img_pos[i].name + ".html";
     }
     
 }
