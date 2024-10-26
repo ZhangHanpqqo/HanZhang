@@ -16,8 +16,11 @@ let highlightWords = [
   { line: 6, start: 90820, length: 32800 },
 ];
 
+// import Typewriter from "/assets/rm_typerighter_old.ttf"
+// import songti from "/assets/songti_CN.otf"
+
 function preload() {
-  font = loadFont("/assets/rm_typerighter_old.ttf");
+  font = loadFont( "/assets/rm_typerighter_old.ttf");
   fontCN = loadFont("/assets/songti_CN.otf");
 }
 
