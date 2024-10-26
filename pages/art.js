@@ -318,7 +318,7 @@ function mousePressed(){
 
     // jump to the corresponding page
     if (mouse_click != null){
-        window.location.href = "/pages/art/" + img_pos[i].name + ".html";
+        window.location.href = "./pages/art/" + img_pos[i].name + ".html";
     }
     
 }
