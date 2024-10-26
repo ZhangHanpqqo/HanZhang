@@ -29,7 +29,7 @@ function setup() {
   textSize(fontSize);
   fill(255);
 
-  loadStrings('/assets/intro.txt', doText);
+  loadStrings('./assets/intro.txt', doText);
   
   // // Get the coordinates of the text points
   // points = font.textToPoints(textString, 50, height / 2, fontSize, {
@@ -121,22 +121,22 @@ function draw() {
 function keyPressed() {
   switch (keyCode) {
     case 48: //key 0
-      window.location.href = "/pages/contact.html"; // Replace with desired URL
+      window.location.href = "./pages/contact.html"; // Replace with desired URL
       break;
     case 49: //key 1
-      window.location.href = "/pages/art.html"; // Replace with desired URL
+      window.location.href = "./pages/art.html"; // Replace with desired URL
       break;
     case 50: //key 2
-      window.location.href = "/pages/tech.html"; // Replace with desired URL
+      window.location.href = "./pages/tech.html"; // Replace with desired URL
       break;
     case 51: //key 3
-      window.location.href = "/pages/life.html"; // Replace with desired URL
+      window.location.href = "./pages/life.html"; // Replace with desired URL
       break;
     case 52: //key 4
-      window.location.href = "/pages/CN.html"; // Replace with desired URL
+      window.location.href = "./pages/CN.html"; // Replace with desired URL
       break;
     case 57: //key 9
-      window.open("/assets/CV_art_Han_2410.pdf", '_blank'); // Replace with desired URL
+      window.open("./assets/CV_art_Han_2410.pdf", '_blank'); // Replace with desired URL
       break;
   }
 }
