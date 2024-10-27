@@ -20,13 +20,8 @@ let highlightWords = [
 // import songti from "/assets/songti_CN.otf"
 
 function preload() {
-<<<<<<< HEAD
-  font = loadFont( "/assets/rm_typerighter_old.ttf");
-  fontCN = loadFont("/assets/songti_CN.otf");
-=======
   font = loadFont("./assets/rm_typerighter_old.ttf");
   fontCN = loadFont("./assets/songti_CN.otf");
->>>>>>> 22c701ebb911f601947b231275f282f4377a2741
 }
 
 
