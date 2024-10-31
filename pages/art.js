@@ -5,17 +5,19 @@ let blocks = [];
 let block_count = 0;
 let img;
 let img_pos = [];
+let hover_shadow;
+let hover_border;
 
-const images = [
-    {index: 0, path: "../assets/img_art/bio_artist.JPG", name: "bio", associate:[]},
-    {index: 1, path: "../assets/img_art/improv.JPG", name: "improv",  associate:[]},
-    {index: 2, path: "../assets/img_art/floating.jpg", name: "floating",  associate:[]},           
-    {index: 3, path: "../assets/img_art/woyuekan.JPG", name: "woyuekan",  associate:[]},           
-    {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT",  associate:[]},               
-    {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M",  associate:[6]},        
-    {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L",  associate:[5]},        
-    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood",  associate:[]},         
-    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical",  associate:[]}    
+let images = [
+    {index: 0, path: "../assets/img_art/bio_artist.JPG", name: "bio", full: "Artist Bio", associate:[]},
+    {index: 1, path: "../assets/img_art/improv.JPG", name: "improv", full: "improvisation", associate:[]},
+    {index: 2, path: "../assets/img_art/floating.jpg", name: "floating", full: "nobody thus everybody floating in the air (2023)", associate:[]},           
+    {index: 3, path: "../assets/img_art/woyuekan.JPG", name: "woyuekan", full:"我越看你越像一个人 (2023)", associate:[]},           
+    {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT", full: "Leave No Trace (2023)", associate:[]},               
+    {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M", full: "Learning to Move, Learning to Play, Learning to Animate (2024)", associate:[6]},        
+    {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
+    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[]},         
+    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[]}    
 ];
 
 ///// SETUP
@@ -43,12 +45,17 @@ function setup() {
     createCanvas(window.innerWidth,window.innerHeight)
     addImage(images);
     print(img_pos)
+
+    // create the shadow for the picture that the mouse hovers on
+    hover_shadow = document.getElementById('hover_shadow');
+    hover_border = document.getElementById('hover_border');
+    hover_border.style.backgroundColor='transparent'
     
 }
 
 function addImage(){
     images.forEach((element, index) => {
-        loadImage(element.path, (img) => imgHandler(img, element.name));
+        loadImage(element.path, (img) => imgHandler(img, element.index, element.name, element.full, element.associate));
     } 
     );
     // for (var i = 0; i<images.length; i++){
@@ -57,7 +64,7 @@ function addImage(){
     
 }
 
-function imgHandler(img, n){
+function imgHandler(img, ind, n, f, a){
     // find the most compatible block
     var img_ratio = img.height / img.width;
     var best_b_ratio = 1000;
@@ -89,7 +96,7 @@ function imgHandler(img, n){
     blocks.splice(best_b_ind, 1);
     
     // record the real position of the image
-    img_pos.push({name: n, pos: [best_b_rec.min.x+1, best_b_rec.min.y+1, best_b_rec.max.x-1, best_b_rec.max.y-1]})
+    img_pos.push({index: ind, name: n, full:f, associate: a, pos: [best_b_rec.min.x+1, best_b_rec.min.y+1, best_b_rec.max.x-1, best_b_rec.max.y-1]})
 }
 
 
@@ -280,6 +287,9 @@ class Rectangle {
 function draw(){
     ///// Draw
     var mouse_hover;
+    var mouse_hover_pos; 
+    var mouse_hover_full_name;
+    var mouse_hover_associate;
 
     // detect mouse hover
     for(var i = 0; i < img_pos.length; i++){
@@ -287,21 +297,80 @@ function draw(){
             mouseX <= img_pos[i].pos[2] && mouseY <= img_pos[i].pos[3]
         ){
             mouse_hover = i;
+            mouse_hover_pos = img_pos[i].pos;
+            mouse_hover_full_name = img_pos[i].full;
+            mouse_hover_associate = img_pos[i].associate;
             break;
         }
     }
 
     if (mouse_hover == null){
         cursor(ARROW);
+        hover_shadow.style.opacity = 0;
+        while(hover_border.firstChild){
+            hover_border.removeChild(hover_border.firstChild);
+        }
+
     }
     else{
         cursor(HAND);
+        hover_trigger(mouse_hover_pos, mouse_hover_full_name, mouse_hover_associate);
 
     }
 
 
 
 }
+
+function hover_trigger(pos, full, associate){
+    // pos: [minx, miny, maxx, maxy]
+
+    // hovering triggers the selected rectangle to react
+    const center = [(pos[0] + pos[2]) / 2, (pos[1] + pos[3]) / 2]; // center of the 
+    const dsquare = Math.abs(mouseX - center[0]) + Math.abs(mouseY - center[1]); // square of distance to center
+    const dsquareref = (pos[2] - pos[0]) / 2 + (pos[3] - pos[1]) / 2;
+    const opacity = 0.9 - (dsquare / dsquareref);
+
+    hover_shadow.style.left = pos[0].toString() + 'px';
+    hover_shadow.style.top = pos[1].toString() + 'px';
+    hover_shadow.style.width = (pos[2] - pos[0] - 3).toString() + 'px';
+    hover_shadow.style.height = (pos[3] - pos[1] - 3).toString() + 'px';
+    hover_shadow.style.opacity = opacity;
+
+    hover_shadow.innerText = full;
+
+    // Create shadows on associate projects
+    while(hover_border.firstChild){
+        hover_border.removeChild(hover_border.firstChild);
+    }
+    for(var i=0; i < associate.length; i++){
+        
+        var sa = document.createElement('div');
+        sa.classList.add('shadow')
+        sa.style.opacity = opacity;
+        
+        for(var j=0; j<img_pos.length; j++){
+            if (img_pos[j].index == associate[i]){
+                print(img_pos[j].pos)
+                sa.style.left = (img_pos[j].pos[0]).toString() + 'px';
+                sa.style.top = (img_pos[j].pos[1]).toString() + 'px';
+                sa.style.width = (img_pos[j].pos[2] - img_pos[j].pos[0] - 3).toString() + 'px';
+                sa.style.height = (img_pos[j].pos[3] - img_pos[j].pos[1] - 3).toString() + 'px';
+                break;
+                
+            }
+        }
+
+        hover_border.appendChild(sa);
+    }
+
+    print(hover_border)
+    
+
+
+}
+
+
 
 function mousePressed(){
     var mouse_click;

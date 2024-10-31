@@ -13,6 +13,13 @@
   </head>
   
   <style>
+    @font-face {
+            font-family: typerighter;
+            src: url('../assets/SpecialElite.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
     html, body {
             height: 100%;       /* Set height to 100% */
             margin: 0;         /* Remove default margin */
@@ -31,6 +38,31 @@
         position:absolute;
         top:0px;
         left:0px;
+        z-index: 1;
+    }
+
+    .shadow{
+      position: absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom: 0px;
+      z-index: 10;
+      background-color: black;
+      opacity: 0;
+      pointer-events: none;    
+
+      border: 2px solid #78f7e0;
+      box-shadow: 0 0 10px #78f7e0, /* Outer glow */
+                  0 0 20px #78f7e0,
+                  0 0 30px #78f7e0; /* Stronger outer glow */
+      transition: box-shadow 0.3s ease-in-out;
+      
+      display:flex;
+      text-align: center;
+      justify-content: center; 
+      align-items: center; 
+      font-family: typerighter; 
     }
 
 
@@ -38,6 +70,9 @@
 
   <body>
     <canvas id="doodle"></canvas>
+    <div id="hover_border"></div>
+    <div class="shadow" id="hover_shadow"></div>
+    
     <script src="art.js"></script>
   </body>
 </html>

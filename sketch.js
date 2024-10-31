@@ -33,16 +33,6 @@ function setup() {
   fill(255);
 
   loadStrings('./assets/intro.txt', doText);
-  
-  // // Get the coordinates of the text points
-  // points = font.textToPoints(textString, 50, height / 2, fontSize, {
-  //   sampleFactor: 0.5
-  // });
-
-  // // Create particles from points
-  // for (let i = 0; i < points.length; i++) {
-  //   particles.push(new Particle(points[i].x, points[i].y));
-  // }
 }
 
 function doText(lines){
