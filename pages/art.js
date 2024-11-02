@@ -44,7 +44,6 @@ function setup() {
     // fill in the images
     createCanvas(window.innerWidth,window.innerHeight)
     addImage(images);
-    print(img_pos)
 
     // create the shadow for the picture that the mouse hovers on
     hover_shadow = document.getElementById('hover_shadow');
@@ -90,7 +89,27 @@ function imgHandler(img, ind, n, f, a){
     }
 
     // draw the image on canvas
-    image(img, best_b_rec.min.x+1, best_b_rec.min.y+1, Math.abs(best_b_rec.max.x-best_b_rec.min.x)-2, Math.abs(best_b_rec.max.y-best_b_rec.min.y)-2);
+    var disW, disH; // display width and height for the image
+    rec_ratio = (best_b_rec.max.y - best_b_rec.min.y) / (best_b_rec.max.x - best_b_rec.min.x)
+    print(img_ratio, rec_ratio)
+    if (img_ratio > rec_ratio){
+        disH = best_b_rec.max.y - best_b_rec.min.y;
+        disW = int(disH / img_ratio - 2.5);
+        disH = int(disH) - 2;
+        // print(disW, disH, best_b_rec.max.x - best_b_rec.min.x, best_b_rec.max.y - best_b_rec.min.y)
+
+    }
+    else{
+        disW = best_b_rec.max.x - best_b_rec.min.x;
+        disH = int(disW * img_ratio - 2.5);
+        disW = int(disW) - 2;
+    }
+
+    var imgX = best_b_rec.min.x + int((best_b_rec.max.x - best_b_rec.min.x - disW) / 2) + 1;
+    var imgY = best_b_rec.min.y + int((best_b_rec.max.y - best_b_rec.min.y - disH) / 2) + 1;
+    // image(img, best_b_rec.min.x+1, best_b_rec.min.y+1, Math.abs(best_b_rec.max.x-best_b_rec.min.x)-2, Math.abs(best_b_rec.max.y-best_b_rec.min.y)-2);
+    image(img, imgX, imgY, disW, disH);
+    drawMirrors(img, imgX, imgY, disW, disH, best_b_rec.min.x+1, best_b_rec.min.y+1, best_b_rec.max.x - best_b_rec.min.x - 2, best_b_rec.max.y - best_b_rec.min.y - 2)
     
     // remove that block from the list
     blocks.splice(best_b_ind, 1);
@@ -100,6 +119,35 @@ function imgHandler(img, ind, n, f, a){
 }
 
 
+function drawMirrors(img, imgX, imgY, displayWidth, displayHeight, rectX, rectY, rectWidth, rectHeight) {
+    // Left mirrored part
+    for (var x = rectX; x < imgX; x += 1) {
+      var ratio = map(x, rectX, imgX, 255, 0);
+      tint(255, 255);
+      copy(img, 0, 0, 1, img.height, x, imgY, 1, displayHeight);
+    }
+  
+    // Right mirrored part
+    for (var x = imgX + displayWidth; x < rectX + rectWidth; x += 1) {
+      var ratio = map(x, imgX + displayWidth, rectX + rectWidth, 0, 255);
+      tint(255, 255);
+      copy(img, img.width - 1, 0, 1, img.height, x, imgY, 1, displayHeight);
+    }
+  
+    // Top mirrored part
+    for (var y = rectY; y < imgY; y += 1) {
+      var ratio = map(y, rectY, imgY, 255, 0);
+      tint(255, 255);
+      copy(img, 0, 0, img.width, 1, imgX, y, displayWidth, 1);
+    }
+  
+    // Bottom mirrored part
+    for (var y = imgY + displayHeight; y < rectY + rectHeight; y += 1) {
+      var ratio = map(y, imgY + displayHeight, rectY + rectHeight, 0, 255);
+      tint(255, 255);
+      copy(img, 0, img.height - 1, img.width, 1, imgX, y, displayWidth, 1);
+    }
+  }
 
 function randInt (min, max) {
     return Math.floor(Math.random() * (max - min) + min)
@@ -144,7 +192,8 @@ class Rectangle {
     }
 
     save_block(i){
-        blocks.push({index: i, rec: this, ratio: Math.abs((this.max.y - this.min.y)/(this.max.x - this.min.x))})
+        var r = (this.max.y - this.min.y)/(this.max.x - this.min.x)
+        blocks.push({index: i, rec: this, ratio: r})
     }
   
     split (xPad, yPad, depth, limit, ctx) {
@@ -362,10 +411,7 @@ function hover_trigger(pos, full, associate){
         }
 
         hover_border.appendChild(sa);
-    }
-
-    print(hover_border)
-    
+    }    
 
 
 }
