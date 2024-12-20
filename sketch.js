@@ -129,7 +129,7 @@ function keyPressed() {
       window.location.href = "./pages/CN.html"; // Replace with desired URL
       break;
     case 57: //key 9
-      window.open("./assets/CV_art_Han_2410.pdf", '_blank'); // Replace with desired URL
+      window.open("./assets/CV_art_Han_2411.pdf", '_blank'); // Replace with desired URL
       break;
   }
 }

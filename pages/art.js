@@ -11,13 +11,14 @@ let hover_border;
 let images = [
     {index: 0, path: "../assets/img_art/bio_artist.JPG", name: "bio", full: "Artist Bio", associate:[]},
     {index: 1, path: "../assets/img_art/improv.JPG", name: "improv", full: "improvisation", associate:[]},
-    {index: 2, path: "../assets/img_art/floating.jpg", name: "floating", full: "nobody thus everybody floating in the air (2023)", associate:[]},           
+    {index: 2, path: "../assets/img_art/floating.jpg", name: "floating", full: "nobody thus everybody floating in the air (2023)", associate:[9]},           
     {index: 3, path: "../assets/img_art/woyuekan.JPG", name: "woyuekan", full:"我越看你越像一个人 (2023)", associate:[]},           
     {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT", full: "Leave No Trace (2023)", associate:[]},               
     {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M", full: "Learning to Move, Learning to Play, Learning to Animate (2024)", associate:[6]},        
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
     {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[]},         
-    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[]}    
+    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[]} ,
+    {index: 9, path: "../assets/img_art/me_hiciste_falta.png", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]}   
 ];
 
 ///// SETUP
@@ -395,7 +396,7 @@ function hover_trigger(pos, full, associate){
     for(var i=0; i < associate.length; i++){
         
         var sa = document.createElement('div');
-        sa.classList.add('shadow')
+        sa.classList.add('shadow');
         sa.style.opacity = opacity;
         
         for(var j=0; j<img_pos.length; j++){

@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Currents submission</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+
+    <script src="../../../libraries/p5.min.js"></script>
+    <script src="../../../libraries/p5.sound.min.js"></script>
+  </head>
+  
+  <style>
+    @font-face {
+            font-family: typerighter;
+            src: url('../../../assets/SpecialElite.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+    html, body {
+            height: 100%;       /* Set height to 100% */
+            margin: 0;         /* Remove default margin */
+            padding: 0;        /* Remove default padding */
+        }
+    body {
+        background: black;
+        display: flex;              /* Allow flexbox layout */
+        justify-content: center;    
+        align-items: center;        
+        font-family: Arial, sans-serif; 
+        color: white;               /* Text color for visibility */
+    }
+
+    canvas{
+        position:absolute;
+        top:0px;
+        left:0px;
+        z-index: 1;
+    }
+
+    .shadow{
+      position: absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom: 0px;
+      z-index: 10;
+      background-color: black;
+      opacity: 0;
+      pointer-events: none;    
+
+      border: 2px solid #78f7e0;
+      box-shadow: 0 0 10px #78f7e0, /* Outer glow */
+                  0 0 20px #78f7e0,
+                  0 0 30px #78f7e0; /* Stronger outer glow */
+      transition: box-shadow 0.3s ease-in-out;
+      
+      display:flex;
+      text-align: center;
+      justify-content: center; 
+      align-items: center; 
+      font-family: typerighter; 
+    }
+
+    .text{
+      position: absolute;
+      margin-top: 10px;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      margin-right: 10px;
+
+      border: 0px solid black;
+      padding: 0px;
+      z-index: 10;
+      background-color: violet;
+      opacity: 255;
+      pointer-events: none;
+
+      display:flex;
+      /* text-align: center;
+      justify-content: center; 
+      align-items: center;  */
+      font-family: typerighter; 
+    }
+
+    .video-region{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+  </style>
+
+  <body>
+    <canvas id="doodle"></canvas>
+    <div id="hover_border"></div>
+    <div class="shadow" id="hover_shadow"></div>
+    <div class="text" id="text"></div>
+    <!-- <div class="video-region" id="v1"></div> -->
+    <iframe id="v0" style="display:flex; top: 0; left: 0; z-index: 20;" width="560" height="315" src="https://www.youtube.com/embed/T8mrf2UiFOg?si=Ay8EZUaGq6cp_tuc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    
+    <!-- <div class="video-region" id="v2"></div>
+    <div class="video-region" id="v3"></div> -->
+    
+    <script>
+    
+let spots = [];
+let limit = 3;
+let particles = []; 
+let blocks = [];
+let block_count = 0;
+let block_count_max = 4;
+let img;
+let img_pos = [];
+let hover_shadow;
+let hover_border;
+
+let images = [
+    {index: 0, path: "./currents_assets/甲辰癸巳_long_v0.m4v", name: "anna", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[]}
+];
+
+///// SETUP
+function setup() {
+    background(0);
+    var canvas = document.getElementById('doodle')
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var ctx = canvas.getContext('2d')
+    ctx.beginPath()
+    ctx.lineWidth = 2
+    ctx.strokeStyle = 'white'
+    
+    // draw the mondrian shape
+    var xPad = Math.floor(canvas.width * 0.1)
+    var yPad = Math.floor(canvas.height * 0.1)
+    
+    var initialRect = new Rectangle(new Point(0, 0), new Point(canvas.width, canvas.height))
+    
+    // draw the mondrain grid
+    initialRect.split(xPad, yPad, 0, limit, ctx)
+    ctx.stroke()
+    
+    // fill in the images
+    createCanvas(window.innerWidth,window.innerHeight)
+    addImage();
+
+    // create the shadow for the picture that the mouse hovers on
+    // hover_shadow = document.getElementById('hover_shadow');
+    // hover_border = document.getElementById('hover_border');
+    // hover_border.style.backgroundColor='transparent'
+    
+}
+
+function addImage(){
+    // images.forEach((element, index) => {
+    //     loadImage(element.path, (img) => imgHandler(img, element.index, element.name, element.full, element.associate));
+    // } 
+    // );
+    // for (var i = 0; i<images.length; i++){
+    //     loadImage(images[i].path, (img) => imgHandler(img, i));
+    // }
+    // use the largiest block for proposal
+    var blockAM = 0;
+    var blockAM_index;
+    for(var i = 0; i < blocks.length; i++){
+      if (blocks[i].area > blockAM){
+        blockAM_index = i;
+        blockAM = blocks[i].area;
+      }
+    }
+
+    var words = document.getElementById('text');
+    words.style.left = (blocks[blockAM_index].rec.min.x + 1).toString() + 'px';
+    words.style.top = (blocks[blockAM_index].rec.min.y + 1).toString() + 'px';
+    words.style.width = (blocks[blockAM_index].rec.max.x - blocks[blockAM_index].rec.min.x - 20).toString() + 'px';
+    words.style.height = (blocks[blockAM_index].rec.max.y - blocks[blockAM_index].rec.min.y - 20).toString() + 'px';
+    fetch('./currents_assets/currents_intro.txt').then(t => {return t.text();}).then(data => {words.innerText = data;});
+
+    // embedding the elements in other blocks
+
+    images.forEach((element, index) => {
+        var vid = 'v' + index.toString();
+        var v = document.getElementById(vid);
+        var vratio = int(v.height) / int(v.width);
+
+        var bind = index >= blockAM_index ? index++ : index;
+        var bH = blocks[bind].rec.max.y - blocks[bind].rec.min.y - 1;
+        var bW = blocks[bind].rec.max.x - blocks[bind].rec.min.x - 1;
+        var bratio = bH / bW;
+
+        var disH, disW;
+        if (vratio > bratio){
+          disH = bH;
+          disW = int(disH / vratio - 2.5);
+          disH = int(disH) - 2;
+        }
+        else{
+          disW = bW;
+          disH = int(disW * vratio - 2.5);
+          disW = int(disW) - 2;
+        }
+
+        print(disW, disH)
+
+        v.height = disH;
+        v.width = disW;
+        v.style.left = (blocks[bind].rec.min.x + int((bW - disW)/2) + 1).toString()+'px';
+        v.style.top = (blocks[bind].rec.min.y + int((bH - disH)/2) + 1).toString()+'px';
+
+
+
+  }
+  );
+    
+}
+
+function imgHandler(img, ind, n, f, a){
+    // find the most compatible block
+    var img_ratio = img.height / img.width;
+    var best_b_ratio = 1000;
+    var best_b_ind=0;
+    var best_b_rec;
+    var found_flag = 0;
+    for(var i = 0; i<blocks.length-1;i++){
+        if ((1 - img_ratio) * (1 - blocks[i].ratio) >= 0){
+            found_flag = 1;
+            if (Math.abs(1 - img_ratio/blocks[i].ratio) < best_b_ratio){
+                best_b_ratio = Math.abs(1 - img_ratio/blocks[i].ratio);
+                best_b_ind = i;
+                best_b_rec = blocks[i].rec;
+            }
+        }
+        if(found_flag == 0){
+            if (Math.abs(1 - img_ratio/blocks[i].ratio) < best_b_ratio){
+                best_b_ratio = Math.abs(1 - img_ratio/blocks[i].ratio);
+                best_b_ind = i;
+                best_b_rec = blocks[i].rec;
+            }
+        }
+    }
+
+    // draw the image on canvas
+    var disW, disH; // display width and height for the image
+    rec_ratio = (best_b_rec.max.y - best_b_rec.min.y) / (best_b_rec.max.x - best_b_rec.min.x)
+    print(img_ratio, rec_ratio)
+    if (img_ratio > rec_ratio){
+        disH = best_b_rec.max.y - best_b_rec.min.y;
+        disW = int(disH / img_ratio - 2.5);
+        disH = int(disH) - 2;
+        // print(disW, disH, best_b_rec.max.x - best_b_rec.min.x, best_b_rec.max.y - best_b_rec.min.y)
+
+    }
+    else{
+        disW = best_b_rec.max.x - best_b_rec.min.x;
+        disH = int(disW * img_ratio - 2.5);
+        disW = int(disW) - 2;
+    }
+
+    var imgX = best_b_rec.min.x + int((best_b_rec.max.x - best_b_rec.min.x - disW) / 2) + 1;
+    var imgY = best_b_rec.min.y + int((best_b_rec.max.y - best_b_rec.min.y - disH) / 2) + 1;
+    // image(img, best_b_rec.min.x+1, best_b_rec.min.y+1, Math.abs(best_b_rec.max.x-best_b_rec.min.x)-2, Math.abs(best_b_rec.max.y-best_b_rec.min.y)-2);
+    image(img, imgX, imgY, disW, disH);
+    drawMirrors(img, imgX, imgY, disW, disH, best_b_rec.min.x+1, best_b_rec.min.y+1, best_b_rec.max.x - best_b_rec.min.x - 2, best_b_rec.max.y - best_b_rec.min.y - 2)
+    
+    // remove that block from the list
+    blocks.splice(best_b_ind, 1);
+    
+    // record the real position of the image
+    img_pos.push({index: ind, name: n, full:f, associate: a, pos: [best_b_rec.min.x+1, best_b_rec.min.y+1, best_b_rec.max.x-1, best_b_rec.max.y-1]})
+}
+
+
+function drawMirrors(img, imgX, imgY, displayWidth, displayHeight, rectX, rectY, rectWidth, rectHeight) {
+    // Left mirrored part
+    for (var x = rectX; x < imgX; x += 1) {
+      var ratio = map(x, rectX, imgX, 255, 0);
+      tint(255, 255);
+      copy(img, 0, 0, 1, img.height, x, imgY, 1, displayHeight);
+    }
+  
+    // Right mirrored part
+    for (var x = imgX + displayWidth; x < rectX + rectWidth; x += 1) {
+      var ratio = map(x, imgX + displayWidth, rectX + rectWidth, 0, 255);
+      tint(255, 255);
+      copy(img, img.width - 1, 0, 1, img.height, x, imgY, 1, displayHeight);
+    }
+  
+    // Top mirrored part
+    for (var y = rectY; y < imgY; y += 1) {
+      var ratio = map(y, rectY, imgY, 255, 0);
+      tint(255, 255);
+      copy(img, 0, 0, img.width, 1, imgX, y, displayWidth, 1);
+    }
+  
+    // Bottom mirrored part
+    for (var y = imgY + displayHeight; y < rectY + rectHeight; y += 1) {
+      var ratio = map(y, imgY + displayHeight, rectY + rectHeight, 0, 255);
+      tint(255, 255);
+      copy(img, 0, img.height - 1, img.width, 1, imgX, y, displayWidth, 1);
+    }
+  }
+
+function randInt (min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+  }
+  
+class Point {
+    constructor (x, y) {
+      this.x = x
+      this.y = y
+    }
+}
+  
+  
+class Rectangle {
+    constructor (min, max) {
+      this.min = min
+      this.max = max
+    }
+  
+    get width () {
+      return this.max.x - this.min.x
+    }
+  
+    get height () {
+      return this.max.y - this.min.y
+    }
+  
+    draw (ctx) {
+      // Draw clockwise
+      ctx.moveTo(this.min.x, this.min.y)
+      ctx.lineTo(this.max.x, this.min.y)
+      ctx.lineTo(this.max.x, this.max.y)
+      ctx.lineTo(this.min.x, this.max.y)
+      ctx.lineTo(this.min.x, this.min.y)
+    }
+
+    draw_in_particles(){
+        createParticles(this.min.x, this.min.y, this.max.x, this.min.x);
+        createParticles(this.min.x, this.min.y, this.min.x, this.max.x);
+        createParticles(this.max.x, this.min.y, this.max.x, this.max.x);
+        createParticles(this.min.x, this.max.y, this.max.x, this.max.x);
+    }
+
+    save_block(i){
+        var r = (this.max.y - this.min.y)/(this.max.x - this.min.x);
+        var a = (this.max.y - this.min.y) + (this.max.x - this.min.x);
+        blocks.push({index: i, rec: this, ratio: r, area: a});
+    }
+  
+    split (xPad, yPad, depth, limit, ctx) {
+        this.draw(ctx)
+        // this.draw_in_particles(ctx)
+        
+  
+      // Check the level of recursion
+      if (depth === limit) {
+        this.save_block(block_count)
+        block_count++
+        return
+      }
+  
+      // Check the rectangle is enough large and tall
+      if (this.width < 2 * xPad || this.height < 2 * yPad) {
+        this.save_block(block_count)
+        block_count++
+        return
+      }
+
+      if (block_count > block_count_max){
+        return
+      }
+      
+  
+      // If the rectangle is wider than it's height do a left/right split
+      var r1 = new Rectangle()
+      var r2 = new Rectangle()
+      if (this.width > this.height) {
+        var x = randInt(this.min.x + xPad, this.max.x - xPad)
+        r1 = new Rectangle(this.min, new Point(x, this.max.y))
+        r2 = new Rectangle(new Point(x, this.min.y), this.max)
+      // Else do a top/bottom split
+      } else {
+        var y = randInt(this.min.y + yPad, this.max.y - yPad)
+        r1 = new Rectangle(this.min, new Point(this.max.x, y))
+        r2 = new Rectangle(new Point(this.min.x, y), this.max)
+      }
+  
+      // Split the sub-rectangles
+      r1.split(xPad, yPad, depth + 1, limit, ctx)
+      r2.split(xPad, yPad, depth + 1, limit, ctx)
+    }
+}
+
+function draw(){
+    ///// Draw
+    // var mouse_hover;
+    // var mouse_hover_pos; 
+    // var mouse_hover_full_name;
+    // var mouse_hover_associate;
+
+    // detect mouse hover
+    // for(var i = 0; i < img_pos.length; i++){
+    //     if (mouseX >= img_pos[i].pos[0] && mouseY >= img_pos[i].pos[1] &&
+    //         mouseX <= img_pos[i].pos[2] && mouseY <= img_pos[i].pos[3]
+    //     ){
+    //         mouse_hover = i;
+    //         mouse_hover_pos = img_pos[i].pos;
+    //         mouse_hover_full_name = img_pos[i].full;
+    //         mouse_hover_associate = img_pos[i].associate;
+    //         break;
+    //     }
+    // }
+
+    // if (mouse_hover == null){
+    //     cursor(ARROW);
+
+    // }
+    // else{
+    //     cursor(HAND);
+    // }
+
+
+
+}
+
+
+
+///// Key Control
+function keyPressed() {
+    if (keyCode === ENTER) {
+        window.location.href = "../../../../index.html"; // Replace with desired URL
+    }
+}
+
+    </script>
+  </body>
+</html>
