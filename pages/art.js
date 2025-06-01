@@ -1,5 +1,5 @@
 let spots = [];
-let limit = 7;
+let limit = 10;
 let particles = [];
 let blocks = [];
 let block_count = 0;
@@ -10,15 +10,21 @@ let hover_border;
 
 let images = [
     {index: 0, path: "../assets/img_art/bio_artist.JPG", name: "bio", full: "Artist Bio", associate:[]},
-    {index: 1, path: "../assets/img_art/improv.JPG", name: "improv", full: "improvisation", associate:[]},
+    // {index: 1, path: "../assets/img_art/improv.JPG", name: "improv", full: "improvisation", associate:[]},
     {index: 2, path: "../assets/img_art/floating.jpg", name: "floating", full: "nobody thus everybody floating in the air (2023)", associate:[9]},           
     {index: 3, path: "../assets/img_art/woyuekan.JPG", name: "woyuekan", full:"我越看你越像一个人 (2023)", associate:[]},           
-    {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT", full: "Leave No Trace (2023)", associate:[]},               
+    // {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT", full: "Leave No Trace (2023)", associate:[]},               
     {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M", full: "Learning to Move, Learning to Play, Learning to Animate (2024)", associate:[6]},        
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
-    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[]},         
+    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[12, 13]},         
     {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[]} ,
-    {index: 9, path: "../assets/img_art/me_hiciste_falta.png", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]}   
+    {index: 9, path: "../assets/img_art/me_hiciste_falta.png", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
+    {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "No Input Dev (2025)", associate:[]},
+    {index: 11, path: "../assets/img_art/Loom.jpg", name:"Loom", full:"Loom (2025)", associate:[]},
+    {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13]},
+    {index: 13, path: "../assets/img_art/tpwi.png", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12]},
+    {index: 14, path: "../assets/img_art/(<e>).jpg", name: "e", full:"(<e>) (2025) - Theegma duo", associate: [15]},
+    {index: 15, path: "../assets/img_art/0=).jpg", name:"0=)", full:"0二二二二二) (2025) - Theegma duo", associate: [14]}
 ];
 
 ///// SETUP
