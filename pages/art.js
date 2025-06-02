@@ -17,10 +17,10 @@ let images = [
     {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M", full: "Learning to Move, Learning to Play, Learning to Animate (2024)", associate:[6]},        
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
     {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[12, 13]},         
-    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[]} ,
+    {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[11]} ,
     {index: 9, path: "../assets/img_art/me_hiciste_falta.png", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
     {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "No Input Dev (2025)", associate:[]},
-    {index: 11, path: "../assets/img_art/Loom.jpg", name:"Loom", full:"Loom (2025)", associate:[]},
+    {index: 11, path: "../assets/img_art/Loom.jpg", name:"Loom", full:"Loom (2025)", associate:[8]},
     {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13]},
     {index: 13, path: "../assets/img_art/tpwi.png", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12]},
     {index: 14, path: "../assets/img_art/(<e>).jpg", name: "e", full:"(<e>) (2025) - Theegma duo", associate: [15]},
@@ -440,7 +440,12 @@ function mousePressed(){
 
     // jump to the corresponding page
     if (mouse_click != null){
-        window.location.href = "./art/" + img_pos[i].name + ".html";
+        if (img_pos[i].index == 12) {
+            window.open("https://annaduo.pro/pages/ddm.html", "_blank");
+        }
+        else{
+            window.location.href = "./art/" + img_pos[i].name + ".html";
+        }
     }
     
 }
