@@ -443,6 +443,12 @@ function mousePressed(){
         if (img_pos[i].index == 12) {
             window.open("https://annaduo.pro/pages/ddm.html", "_blank");
         }
+        else if (img_pos[i].index == 13){
+            window.open("https://vimeo.com/1068241207", "_blank");
+        }
+        else if (img_pos[i].index == 10){
+            window.open("https://www.youtube.com/watch?v=-ejnmb9CzHQ&t=32s", "_blank");
+        }
         else{
             window.location.href = "./art/" + img_pos[i].name + ".html";
         }
