@@ -18,13 +18,14 @@ let images = [
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
     {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[12, 13]},         
     {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[11]} ,
-    {index: 9, path: "../assets/img_art/me_hiciste_falta.png", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
+    {index: 9, path: "../assets/img_art/me_hiciste_falta.jpg", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
     {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "No Input Dev (2025)", associate:[]},
     {index: 11, path: "../assets/img_art/Loom.jpg", name:"loom", full:"Loom (2025)", associate:[8]},
     {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13]},
-    {index: 13, path: "../assets/img_art/tpwi.png", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12]},
+    {index: 13, path: "../assets/img_art/tpwi.jpg", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12]},
     {index: 14, path: "../assets/img_art/(<e>).jpg", name: "e", full:"(<e>) (2025) - Theegma duo", associate: [15]},
-    {index: 15, path: "../assets/img_art/0=).jpg", name:"0", full:"0二二二二二) (2025) - Theegma duo", associate: [14]}
+    {index: 15, path: "../assets/img_art/0=).jpg", name:"0", full:"0二二二二二) (2025) - Theegma duo", associate: [14]},
+    {index: 16, path: "../assets/img_art/ems.jpg", name:"ems", full:"Residency in Elektronmusikstudion", associate: []}
 ];
 
 ///// SETUP
@@ -77,7 +78,7 @@ function imgHandler(img, ind, n, f, a){
     var best_b_ind=0;
     var best_b_rec;
     var found_flag = 0;
-    for(var i = 0; i<blocks.length-1;i++){
+    for(var i = blocks.length-1; i>=0; i--){
         if ((1 - img_ratio) * (1 - blocks[i].ratio) >= 0){
             found_flag = 1;
             if (Math.abs(1 - img_ratio/blocks[i].ratio) < best_b_ratio){
@@ -448,6 +449,9 @@ function mousePressed(){
         }
         else if (img_pos[i].index == 10){
             window.open("https://www.youtube.com/watch?v=-ejnmb9CzHQ&t=32s", "_blank");
+        }
+        else if (img_pos[i].index == 16){
+            window.open("https://elektronmusikstudion.se/en/guest-composers/guest-composers-2025/han-zhang/", "_blank");
         }
         else{
             window.location.href = "./art/" + img_pos[i].name + ".html";
