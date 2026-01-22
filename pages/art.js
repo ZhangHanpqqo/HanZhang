@@ -441,16 +441,16 @@ function mousePressed(){
 
     // jump to the corresponding page
     if (mouse_click != null){
-        if (img_pos[i].index == 12) {
+        if (img_pos[i].index == 12) {                   // de-dimension
             window.open("https://annaduo.pro/pages/ddm.html", "_blank");
         }
-        else if (img_pos[i].index == 13){
+        else if (img_pos[i].index == 13){               // these particles we immersed
             window.open("https://vimeo.com/1068241207", "_blank");
         }
-        else if (img_pos[i].index == 10){
-            window.open("https://www.youtube.com/watch?v=-ejnmb9CzHQ&t=32s", "_blank");
+        else if (img_pos[i].index == 10){               // no input device
+            window.open("https://www.youtube.com/watch?v=AoGepDGXJGg", "_blank");
         }
-        else if (img_pos[i].index == 16){
+        else if (img_pos[i].index == 16){               // ems
             window.open("https://elektronmusikstudion.se/en/guest-composers/guest-composers-2025/han-zhang/", "_blank");
         }
         else{
