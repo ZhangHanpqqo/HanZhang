@@ -1,5 +1,5 @@
 let spots = [];
-let limit = 10;
+let limit = 11;
 let particles = [];
 let blocks = [];
 let block_count = 0;
@@ -16,16 +16,17 @@ let images = [
     // {index: 4, path: "../assets/img_art/LNT.JPG", name: "LNT", full: "Leave No Trace (2023)", associate:[]},               
     {index: 5, path: "../assets/img_art/learn2move.jpg", name: "L2M", full: "Learning to Move, Learning to Play, Learning to Animate (2024)", associate:[6]},        
     {index: 6, path: "../assets/img_art/cycle2learn.JPG", name: "C2L", full: "Cycle to Learn (2024)", associate:[5]},        
-    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[12, 13]},         
+    {index: 7, path: "../assets/img_art/anna-wood.jpg", name: "wood", full: "woooowaaadiiiiterrrrr (2024) - āññā duo", associate:[12, 13, 17]},         
     {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[11]} ,
     {index: 9, path: "../assets/img_art/me_hiciste_falta.jpg", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
-    {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "No Input Dev (2025)", associate:[]},
+    {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "no_input_dev (2025 - )", associate:[]},
     {index: 11, path: "../assets/img_art/Loom.jpg", name:"loom", full:"Loom (2025)", associate:[8]},
-    {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13]},
-    {index: 13, path: "../assets/img_art/tpwi.jpg", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12]},
+    {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13, 17]},
+    {index: 13, path: "../assets/img_art/tpwi.jpg", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12, 13]},
     {index: 14, path: "../assets/img_art/(<e>).jpg", name: "e", full:"(<e>) (2025) - Theegma duo", associate: [15]},
     {index: 15, path: "../assets/img_art/0=).jpg", name:"0", full:"0二二二二二) (2025) - Theegma duo", associate: [14]},
-    {index: 16, path: "../assets/img_art/ems.jpg", name:"ems", full:"Residency in Elektronmusikstudion", associate: []}
+    {index: 16, path: "../assets/img_art/ems.jpg", name:"ems", full:"Residency in Elektronmusikstudion", associate: []},
+    {index: 17, path: "../assets/img_art/qwom.jpg", name: "qwom", full:"qwom (2025) - āññā duo", associate: [7, 12, 13]}
 ];
 
 ///// SETUP
@@ -445,13 +446,13 @@ function mousePressed(){
             window.open("https://annaduo.pro/pages/ddm.html", "_blank");
         }
         else if (img_pos[i].index == 13){               // these particles we immersed
-            window.open("https://vimeo.com/1068241207", "_blank");
-        }
-        else if (img_pos[i].index == 10){               // no input device
-            window.open("https://www.youtube.com/watch?v=AoGepDGXJGg", "_blank");
+            window.open("https://annaduo.pro/pages/tpwi.html", "_blank");
         }
         else if (img_pos[i].index == 16){               // ems
             window.open("https://elektronmusikstudion.se/en/guest-composers/guest-composers-2025/han-zhang/", "_blank");
+        }
+         else if (img_pos[i].index == 17){               // qwom
+            window.open("https://annaduo.pro/pages/qwom.html", "_blank");
         }
         else{
             window.location.href = "./art/" + img_pos[i].name + ".html";
