@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        @font-face {
+            font-family: typerighter;
+            src: url('../assets/SpecialElite.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ece8;
+            color: #202020;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-side {
+            width: 50%;
+            overflow: hidden;
+            padding: 0;
+            background-color: #111;
+            position: relative;
+        }
+
+        .portfolio-stage {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000;
+        }
+
+        .right-side {
+            width: 50%;
+            overflow-y: auto;
+            padding: 40px;
+            padding-bottom: 96px;
+            background-color: #080808;
+            border-left: 1px solid rgba(0, 0, 0, 0.08);
+            color: #f3f3f3;
+            position: relative;
+            isolation: isolate;
+            font-family: typerighter, Arial, sans-serif;
+        }
+
+        .right-side::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--detail-bg-image);
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(1);
+            opacity: 0.16;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .right-side::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.9)),
+                rgba(0, 0, 0, 0.5);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .block {
+            position: absolute;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            background-color: #111;
+            background-size: cover;
+            background-position: center;
+            color: #f8f8f8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 8px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            overflow: hidden;
+        }
+
+        .block::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.68)),
+                rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+        }
+
+        .block > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .block.is-filler {
+            cursor: default;
+            background: #050505;
+            padding: 0;
+            transition: none;
+        }
+
+        .block.is-filler:hover {
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .block.is-filler::before {
+            display: none;
+        }
+
+        .block:hover,
+        .block.is-active,
+        .block.is-related {
+            border-color: #78f7e0;
+            box-shadow: 0 0 12px rgba(120, 247, 224, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .block.is-related {
+            box-shadow: inset 0 0 0 1px rgba(120, 247, 224, 0.35);
+        }
+
+        .block-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #78f7e0;
+        }
+
+        .block-title {
+            font-size: 1.3rem;
+            line-height: 1.2;
+            max-width: 18ch;
+        }
+
+        .block-links {
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #dedede;
+        }
+
+        .detail-category {
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #9ad7cf;
+            margin-bottom: 12px;
+        }
+
+        .detail-description {
+            margin-bottom: 24px;
+        }
+
+        .detail-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .detail-links a {
+            color: #b9fff5;
+            text-decoration: none;
+            border-bottom: 1px solid currentColor;
+        }
+
+        .detail-related {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .detail-related button {
+            border: 1px solid #9ad7cf;
+            background: transparent;
+            color: #b9fff5;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-family: typerighter, Arial, sans-serif;
+        }
+
+        .detail-empty {
+            color: #bdbdbd;
+        }
+
+        .detail-footer {
+            position: absolute;
+            left: 40px;
+            right: 40px;
+            bottom: 32px;
+        }
+
+        .detail-footer a {
+            color: #b9fff5;
+            text-decoration: none;
+            border-bottom: 1px solid currentColor;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-side,
+            .right-side {
+                width: 100%;
+            }
+
+            .portfolio-stage {
+                min-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <div class="portfolio-stage" id="portfolio-list"></div>
+        </div>
+
+        <div class="right-side" id="portfolio-panel">
+            <div id="portfolio-detail">
+                <p class="detail-empty">Select a project to view details.</p>
+            </div>
+            <p class="detail-footer">
+                <a href="./art.html">view full list of artworks</a>
+            </p>
+        </div>
+    </div>
+    <script src="portfolio.js"></script>
+</body>
+</html>
