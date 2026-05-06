@@ -3,31 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umbilical Cord</title>
+    <title>Loom</title>
     <link rel="stylesheet" href="../art.css">
-    
+    <style>
+        .mondrian-container {
+            display: grid;
+            grid-template-areas:
+                "title title media"
+                "text empty media";
+            grid-template-columns: 1.2fr 0.8fr 1.4fr;
+            grid-template-rows: 0.3fr 0.7fr;
+            gap: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: black;
+        }
+
+        .title-block,
+        .text-block,
+        .media-block,
+        .empty-block {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .title-block {
+            grid-area: title;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 2px solid #78f7e0;
+            border-bottom: 2px solid #78f7e0;
+        }
+
+        .text-block {
+            grid-area: text;
+            overflow-y: auto;
+            border-top: 2px solid #78f7e0;
+            border-right: 2px solid #78f7e0;
+        }
+
+        .media-block {
+            grid-area: media;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 2px solid #78f7e0;
+            border-top: 2px solid #78f7e0;
+        }
+
+        .empty-block {
+            grid-area: empty;
+            border-left: 2px solid #78f7e0;
+            border-right: 2px solid #78f7e0;
+        }
+
+        .media-wrapper {
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .title-block:hover,
+        .text-block:hover,
+        .media-block:hover,
+        .empty-block:hover {
+            border-color: #aaf8f1;
+            box-shadow: 0 0 20px rgba(120, 247, 224, 0.75);
+        }
+
+        @media (max-width: 900px) {
+            .mondrian-container {
+                grid-template-areas:
+                    "title"
+                    "text"
+                    "media"
+                    "empty";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+            }
+
+            .title-block,
+            .text-block,
+            .media-block,
+            .empty-block {
+                border-left: none;
+                border-right: none;
+            }
+
+            .title-block {
+                border-top: none;
+                border-bottom: 2px solid #78f7e0;
+            }
+
+            .text-block,
+            .media-block {
+                border-top: 2px solid #78f7e0;
+                border-bottom: 2px solid #78f7e0;
+            }
+
+            .empty-block {
+                border-top: 2px solid #78f7e0;
+                border-bottom: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="content">
-        <h1>Contact</h1>
-
-        <p>Email: <a href="mailto:zhanghanpqqo@gmail.com">zhanghanpqqo@gmail.com</a></p>
-
-        <p>Call Sign: N6ZHH</p>
-        
-        <p>Instagram: <a href="https://www.instagram.com/hanzhangpqqo/">hanzhangpqqo</a></p>
+    <div class="mondrian-container">
+        <div class="title-block">
+            <h1>Loom (2025 - 2026)</h1>
+        </div>
+        <div class="text-block">
+            <p>Loom is a study of physical and sonic materiality, linking gesture, texture, and resonant space.</p>
+            <p>The work explores the act of weaving movement into sound and the tension between presence and process.</p>
+            <p>Presented as an experimental performance and installation in 2025-2026.</p>
+            <p>Press 'Enter' to return to the previous page.</p>
+        </div>
+        <div class="media-block">
+            <div class="media-wrapper">
+                <img src="../assets/img_art/Loom.jpg" alt="Loom artwork">
+            </div>
+        </div>
+        <div class="empty-block"></div>
     </div>
 
     <script>
         document.addEventListener('keypress', function(event) {
-            // Check if the pressed key is 'g' (for Google), using key property
             if (event.key === 'Enter') {
-                // Redirect to Google
                 window.location.href = "../art.html";
             }
         });
     </script>
-
 </body>
 </html>

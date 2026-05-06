@@ -20,7 +20,7 @@ let images = [
     {index: 8, path: "../assets/img_art/umbilical_cord.jpg", name:"umbilical", full: "Umbilical Cord (2024)", associate:[11]} ,
     {index: 9, path: "../assets/img_art/me_hiciste_falta.jpg", name:"falta", full: "Me Hiciste Falta (2024)", associate:[2]},
     {index: 10, path: "../assets/img_art/no_input_dev.jpg", name:"tam", full: "no_input_dev (2025 - )", associate:[]},
-    {index: 11, path: "../assets/img_art/Loom.jpg", name:"loom", full:"Loom (2025)", associate:[8]},
+    {index: 11, path: "../assets/img_art/Loom.jpg", name:"loom", full:"Loom (2025 - 2026)", associate:[8]},
     {index: 12, path: "../assets/img_art/dedim.jpeg", name:"dedim", full:"De-dimension (2025) - āññā duo", associate: [7,13, 17]},
     {index: 13, path: "../assets/img_art/tpwi.jpg", name: "tpwi", full:"The Particles We Immersed (2025) - āññā duo", associate: [7, 12, 13]},
     {index: 14, path: "../assets/img_art/(<e>).jpg", name: "e", full:"(<e>) (2025) - Theegma duo", associate: [15]},
@@ -442,7 +442,10 @@ function mousePressed(){
 
     // jump to the corresponding page
     if (mouse_click != null){
-        if (img_pos[i].index == 12) {                   // de-dimension
+        if (img_pos[i].index == 11) {                   // Loom
+            window.open("https://ideas.ucsd.edu/loom/", "_blank");
+        }
+        else if (img_pos[i].index == 12) {                   // de-dimension
             window.open("https://annaduo.pro/pages/ddm.html", "_blank");
         }
         else if (img_pos[i].index == 13){               // these particles we immersed

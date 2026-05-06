@@ -6,33 +6,158 @@
     <title>Cycle to Learn</title>
     <link rel="stylesheet" href="../art.css">
     
+    <style>
+        .mondrian-container {
+            display: grid;
+            grid-template-areas:
+                "title title video"
+                "text empty video";
+            grid-template-columns: 1.2fr 1fr 1.8fr;
+            grid-template-rows: 0.3fr 0.7fr;
+            gap: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: black;
+        }
+
+        .title-block,
+        .text-block,
+        .iframe-block,
+        .empty-block {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .title-block {
+            grid-area: title;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: none;
+            border-left: none;
+            border-right: 2px solid #78f7e0;
+            border-bottom: 2px solid #78f7e0;
+        }
+
+        .text-block {
+            grid-area: text;
+            overflow-y: auto;
+            border-top: 2px solid #78f7e0;
+            border-left: none;
+            border-right: 2px solid #78f7e0;
+            border-bottom: none;
+        }
+
+        .iframe-block {
+            grid-area: video;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: none;
+            border-right: none;
+            border-left: 2px solid #78f7e0;
+            border-bottom: none;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            align-self: center;
+        }
+
+        .empty-block {
+            grid-area: empty;
+            border-top: 2px solid #78f7e0;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .iframe-block iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .title-block:hover,
+        .text-block:hover,
+        .iframe-block:hover,
+        .empty-block:hover {
+            border-color: #aaf8f1;
+            box-shadow: 0 0 20px rgba(120, 247, 224, 0.75);
+        }
+
+        @media (max-width: 900px) {
+            .mondrian-container {
+                grid-template-areas:
+                    "title"
+                    "text"
+                    "video"
+                    "empty";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+            }
+
+            .title-block,
+            .text-block,
+            .iframe-block,
+            .empty-block {
+                border-left: none;
+                border-right: none;
+            }
+
+            .title-block {
+                border-top: none;
+                border-bottom: 2px solid #78f7e0;
+            }
+
+            .text-block,
+            .iframe-block {
+                border-top: 2px solid #78f7e0;
+                border-bottom: 2px solid #78f7e0;
+            }
+
+            .empty-block {
+                border-top: 2px solid #78f7e0;
+                border-bottom: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="content">
-        <h1>Cycle to Learn(2024)</h1>
-
-        <p>Interactive Installation, immersive experience in the sensory-visual-audio space reacting to the breath.</p>
-        <p>Unveiling the hidden cyclical mechanism of AI knowledge emergence and the deep interaction between Human and AI. </a></p>
-
-        <p>Visual artist: <a href="https://www.mingyongcheng.com/">Mingyong Cheng</a></p>
-
-        <p>Presented in Future Stage, NYC, 2024</p>
-        
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/t9f31IYi7N4?si=diaueoaEW6neazbM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        
-        <p>
-            Press 'Enter' to return to the previous page.
-        </p>
-
-
+    <div class="mondrian-container">
+        <div class="title-block">
+            <h1>Cycle to Learn (2024)</h1>
+        </div>
+        <div class="text-block">
+            <p>Interactive Installation, immersive experience in the sensory-visual-audio space reacting to the breath.</p>
+            <p>Unveiling the hidden cyclical mechanism of AI knowledge emergence and the deep interaction between Human and AI.</p>
+            <p>Visual artist: <a href="https://www.mingyongcheng.com/">Mingyong Cheng</a></p>
+            <p>Presented in Future Stage, NYC, 2024</p>
+            <p>Press 'Enter' to return to the previous page.</p>
+        </div>
+        <div class="iframe-block">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/t9f31IYi7N4?si=diaueoaEW6neazbM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="empty-block"></div>
     </div>
 
     <script>
         document.addEventListener('keypress', function(event) {
-            // Check if the pressed key is 'g' (for Google), using key property
             if (event.key === 'Enter') {
-                // Redirect to Google
                 window.location.href = "../art.html";
             }
         });
