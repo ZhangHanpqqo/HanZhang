@@ -73,6 +73,18 @@ const portfolioItems = [
             { label: "Slides", href: "../old/assets/overall-auto-orchestration.pdf" }
         ],
         associate: [4]
+    },
+    {
+        index: 6,
+        title: "Peeling Cycle (2026) -- A Happy Mennn Trio",
+        category: "Art",
+        shortLabel: "Project page",
+        description: "Sculptural and textile installation, choreographed movement, and projection mapping by A Happy Mennn (AHM) trio \u2014 Anqi Liu, Han Zhang, and Mingyong Cheng.",
+        image: "../assets/img_art/peeling_cycle_ii.jpg",
+        links: [
+            { label: "AHM GitHub", href: "https://github.com/ZhangHanpqqo/AHMwebsite" }
+        ],
+        associate: []
     }
 ];
 

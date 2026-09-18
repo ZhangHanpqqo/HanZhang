@@ -9,6 +9,11 @@ let baseHue = 255;
 let colorCandidates = [baseHue , 100, 250];
 let colorRand;
 
+let isMobile = false;
+let touchX = 0;
+let touchY = 0;
+let touchActive = false;
+
 let highlightWords = [
   { line: 0, start: 75370, length: 20700 }, // Example: Highlight "text" on first line
   { line: 4, start: 56890, length: 52350 }, 
@@ -31,6 +36,11 @@ function setup() {
   textFont(font);
   textSize(fontSize);
   fill(255);
+
+  isMobile = /Mobi|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    || window.matchMedia('(pointer: coarse)').matches
+    || window.matchMedia('(hover: none)').matches;
+  console.log('Device type:', isMobile ? 'mobile' : 'desktop');
 
   loadStrings('./assets/intro.txt', doText);
 }
@@ -98,17 +108,46 @@ function draw() {
   // Draw particles
   for (let i = 0; i < particles.length; i++) {
     let p = particles[i];
-    
-    // If the particle is close to the mouse, it floats around, otherwise it sits at its original position
-    let d = dist(mouseX, mouseY, p.homeX, p.homeY);
-    if (d < mouseRadius) {
-      p.flee(mouseX, mouseY);
+    if (isMobile && touchActive) {
+      let d = dist(touchX, touchY, p.homeX, p.homeY);
+      if (d < mouseRadius) {
+        p.drift();
+      } else {
+        p.returnHome();
+      }
     } else {
-      p.returnHome();
+      let d = dist(mouseX, mouseY, p.homeX, p.homeY);
+      if (d < mouseRadius) {
+        p.flee(mouseX, mouseY);
+      } else {
+        p.returnHome();
+      }
     }
     p.update();
     p.show();
   }
+}
+
+function touchStarted() {
+  if (touches && touches.length > 0) {
+    touchActive = true;
+    touchX = touches[0].x;
+    touchY = touches[0].y;
+  }
+  return false;
+}
+
+function touchMoved() {
+  if (touches && touches.length > 0) {
+    touchX = touches[0].x;
+    touchY = touches[0].y;
+  }
+  return false;
+}
+
+function touchEnded() {
+  touchActive = false;
+  return false;
 }
 
 function keyPressed() {
@@ -160,6 +199,11 @@ class Particle {
     let homeDirection = createVector(this.homeX - this.x, this.homeY - this.y);
     homeDirection.setMag(0.02);
     this.speed.add(homeDirection);
+  }
+
+  drift() {
+    let driftForce = p5.Vector.random2D().mult(0.25);
+    this.speed.add(driftForce);
   }
 
   show() {
