@@ -168,7 +168,7 @@ function keyPressed() {
       window.location.href = "./pages/CN.html"; // Replace with desired URL
       break;
     case 57: //key 9
-      window.open("./assets/CV_art_Han_Zhang_2601.pdf", '_blank'); // Replace with desired URL
+      window.open("./assets/cv_han_zhang.pdf", '_blank'); // Replace with desired URL
       break;
   }
 }
